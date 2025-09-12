@@ -159,76 +159,136 @@
       transform: rotate(5deg);
     }
 
-    /* Navigation */
+    /* Fixed Header */
+.header {
+    background: white;
+    border-bottom: 1px solid var(--light-gray);
+    position: fixed; /* Changed to fixed positioning */
+    top: 0; /* Position at the very top */
+    left: 0; /* Align to left edge */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays above other content */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+}
+
+.header.scrolled {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 8px 0;
+    position: relative;
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--secondary);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+.nav a:hover {
+    color: var(--secondary);
+}
+
+.access-link {
+    background: #0a3d70 !important;
+    color: #fff !important;
+    font-weight: bold;
+    padding: 8px 28px !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    line-height: 1.5 !important;
+    margin-left: 25px !important;
+}
+
+.access-link::after {
+    display: none;
+}
+
+.access-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(126, 194, 66, 0.3);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mobile-menu-btn:hover {
+    color: var(--secondary);
+}
+
+/* Add this to your existing CSS for mobile responsiveness */
+@media (max-width: 900px) {
     .nav {
-      display: flex;
-      align-items: center;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--light-gray);
     }
-
+    
+    .nav.active {
+        display: flex;
+    }
+    
     .nav a {
-      margin-left: 24px;
-      text-decoration: none;
-      color: var(--primary);
-      font-weight: 500;
-      transition: var(--transition);
-      padding: 8px 0;
-      position: relative;
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
     }
-
-    .nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 3px;
-      background: var(--secondary);
-      transition: width 0.3s ease;
-      border-radius: 3px;
-    }
-
-    .nav a:hover::after {
-      width: 100%;
-    }
-
-    .nav a:hover {
-      color: var(--secondary);
-    }
-
-    .access-link {
-      background: #0a3d70 !important;
-      color: #fff !important;
-      font-weight: bold;
-      padding: 8px 28px !important;
-      border-radius: 6px !important;
-      text-decoration: none !important;
-      display: inline-block !important;
-      line-height: 1.5 !important;
-      margin-left: 25px !important;
-    }
-
-    .access-link::after {
-      display: none;
-    }
-
-    .access-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(126, 194, 66, 0.3);
-    }
-
+    
     .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: var(--primary);
-      cursor: pointer;
-      transition: var(--transition);
+        display: block;
     }
-
-    .mobile-menu-btn:hover {
-      color: var(--secondary);
+    
+    .access-link {
+        margin-left: 0 !important;
     }
+}
 
     /* Hero Section */
     .hero {
@@ -938,6 +998,17 @@
       margin-top: 10px;
       text-align: center;
     }
+    .progress-bar {
+  will-change: width;
+}
+
+@media (max-width: 768px) {
+  .progress-bar::after {
+    animation: none;
+    background: none;
+  }
+}
+
 
     @keyframes shimmer {
       0% { transform: translateX(-100%); }
@@ -1897,153 +1968,101 @@
       min-width: 600px;
     }
 
-    /* Use Cases Section scoped CSS */
-    #use-cases .card {
-      border: 2px solid #7EC242;
-      border-radius: 12px;
-      background: #fff;
-      max-width: 320px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+   /* Global Reset */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-    #use-cases .card-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-bottom: 1px solid #eee;
-    }
+/* Wrapper Containers */
+.section-inner, .cards-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 16px;
+  margin: 0 auto;
+}
 
-    #use-cases .card-content {
-      padding: 20px;
-    }
+/* Card Styling */
+#use-cases .card {
+  border: 2px solid #7EC242;
+  border-radius: 12px;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+}
 
-    #use-cases .use-case-step {
-      margin-bottom: 15px;
-    }
+/* Responsive Image */
+#use-cases .card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid #eee;
+}
 
-    #use-cases .step-title {
-      font-weight: 600;
-      color: #004680;
-      margin-bottom: 6px;
-    }
+/* Card Content */
+#use-cases .card-content {
+  padding: 16px;
+}
 
-    #use-cases .step-description {
-      line-height: 1.5;
-      color: #444;
-      white-space: nowrap;     
-      overflow: hidden;        
-      text-overflow: ellipsis; 
-    }
+/* Use Case Steps */
+#use-cases .use-case-step {
+  margin-bottom: 15px;
+}
 
-    #use-cases .card-button {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
+#use-cases .step-title {
+  font-weight: 600;
+  color: #004680;
+  margin-bottom: 6px;
+}
 
-    #use-cases .card-button .btn {
-      background: linear-gradient(135deg, #003366, #004680);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background 0.3s ease;
-    }
+#use-cases .step-description {
+  line-height: 1.5;
+  color: #444;
+  white-space: normal;
+}
 
-    #use-cases .card-button .btn:hover {
-      background: linear-gradient(135deg, #004680, #003366);
-    }
+#use-cases .step-subtext {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+  line-height: 1.4;
+}
 
-    #use-cases .step-description {
-      line-height: 1.5;
-      color: #444;
-      white-space: normal;
-      overflow: visible;
-      text-overflow: unset;
-    }
+/* Button */
+#use-cases .card-button {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
 
-    #use-cases .step-description {
-      line-height: 1.5;
-      color: #444;
-      white-space: nowrap;  
-      overflow: visible;     
-      text-overflow: unset; 
-    }
+#use-cases .card-button .btn {
+  background: linear-gradient(135deg, #003366, #004680);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
 
-    #use-cases .step-subtext {
-      font-size: 14px;
-      color: #666;
-      margin-top: 4px;
-      line-height: 1.4;
-    }
+#use-cases .card-button .btn:hover {
+  background: linear-gradient(135deg, #004680, #003366);
+}
 
-    #use-cases .card {
-      border: 2px solid #7EC242;
-      border-radius: 12px;
-      background: #fff;
-      max-width: 320px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    #use-cases .card-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-bottom: 1px solid #eee;
-    }
-
-    #use-cases .card-content {
-      padding: 20px;
-    }
-
-    #use-cases .use-case-step {
-      margin-bottom: 15px;
-    }
-
-    #use-cases .step-title {
-      font-weight: 600;
-      color: #004680;
-      margin-bottom: 6px;
-    }
-
-    #use-cases .step-description {
-      line-height: 1.5;
-      color: #444;
-    }
-
-    #use-cases .step-subtext {
-      font-size: 0.9em;
-      color: #666;
-      margin-top: 6px;
-      line-height: 1.4;
-    }
-
-    #use-cases .card-button {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
-
-    #use-cases .card-button .btn {
-      background: linear-gradient(135deg, #003366, #004680);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background 0.3s ease;
-    }
-
-    #use-cases .card-button .btn:hover {
-      background: linear-gradient(135deg, #004680, #003366);
-    }
+/* Optional: Small screen tweak */
+@media (max-width: 480px) {
+  #use-cases .card-content {
+    padding: 12px;
+  }
+}
 
     .features li {
       display: flex;
@@ -2168,10 +2187,6 @@
     }
 
     /* New style for (CTA) text */
-    .cta-tag {
-      color: darkred;
-      font-weight: 600;
-    }
 
     .highlighted-box {
       font-weight: 700;
@@ -2485,4 +2500,107 @@ video#tutorial-video {
   color: var(--gray, #666);
   font-size: 16px;
 }
+#workflow-visualization .step-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  position: relative;
+}
 
+#workflow-visualization .step-icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 0;
+  background: none;
+  position: relative;
+  z-index: 1;
+}
+
+#workflow-visualization .step-icon {
+  position: absolute;
+  z-index: 2;
+  font-size: 32px;
+  color: #7EC242;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-wrapper {
+  width: 100%;
+  background: linear-gradient(135deg, #fdfdfd 0%, #f0f8f4 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+}
+
+.hero-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(126, 194, 66, 0.1) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0 30px;
+  min-height: 90vh;
+}
+
+.hero-left, .hero-right {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-left {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 80px 30px;
+  }
+  
+  .hero-left {
+    padding-right: 0;
+    margin-bottom: 50px;
+  }
+  
+  .hero-wrapper {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 60px 20px;
+  }
+  
+  .hero-wrapper {
+    padding: 40px 0;
+  }
+}
+body {
+    padding-top: 70px; /* Adjust this value based on your header height */
+}
