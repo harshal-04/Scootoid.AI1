@@ -4,13 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Currency symbol based on user language
-  const currencySymbol = document.getElementById('currency-symbol');
-  const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-  if (currencySymbol) {
-    currencySymbol.textContent = userLang.includes('in') ? '₹' : '$';
-  }
-
   // Initialize everything else
   initNavigation();
   initSmoothScrolling();
@@ -354,7 +347,6 @@ function initUseCaseDemos() {
   const useCaseButtons = document.querySelectorAll('#use-cases .btn');
   useCaseButtons.forEach(button => {
     button.addEventListener('click', function(e) {
-      e.preventDefault();
       simulateReportGeneration(this.textContent);
     });
   });
