@@ -7,22 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize everything else
   initNavigation();
   initSmoothScrolling();
-  initAnimations();    
+  initHireMeAnimations();    
   initButtons();
   initVideoPlaceholder();
   initMobileMenu();
-  initObserver();
+  initScrollObserver();
   initCardHoverEffects();
   initWorkflowAnimation();
   initUseCaseDemos();
-  initScrollAnimations();
+  initHireMeScrollAnimations();
   initParallaxEffects();
+  initStaggeredAnimations();
+  initCounterAnimations();
 });
 
-
-
 // ======================
-// Navigation
+// Navigation with HireMe-style effects
 // ======================
 function initNavigation() {
   const header = document.querySelector('.header');
@@ -31,7 +31,19 @@ function initNavigation() {
   if (!header || !navLinks.length) return;
 
   window.addEventListener('scroll', function() {
-    header.classList.toggle('scrolled', window.scrollY > 50);
+    const scrolled = window.scrollY > 50;
+    header.classList.toggle('scrolled', scrolled);
+    
+    // HireMe-style header hide/show on scroll
+    if (window.scrollY > 100) {
+      if (window.scrollY > window.lastScrollY) {
+        header.style.transform = 'translateY(-100%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
+    }
+    window.lastScrollY = window.scrollY;
+    
     updateActiveNavLink(navLinks);
   });
 
@@ -93,14 +105,14 @@ function initSmoothScrolling() {
 
 
 // ======================
-// Initial Animations
+// HireMe-style Initial Animations
 // ======================
-function initAnimations() {
-  const animatedElements = document.querySelectorAll('.card, .step, .stat');
+function initHireMeAnimations() {
+  const animatedElements = document.querySelectorAll('.card, .step, .stat, .badge, .features li');
   animatedElements.forEach(element => {
     element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    element.style.transform = 'translateY(50px)';
+    element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
   });
 }
 
@@ -181,10 +193,10 @@ function initMobileMenu() {
 
 
 // ======================
-// Intersection Observer
+// HireMe-style Scroll Observer
 // ======================
-function initObserver() {
-  const animatedElements = document.querySelectorAll('.card, .step, .stat');
+function initScrollObserver() {
+  const animatedElements = document.querySelectorAll('.card, .step, .stat, .comparison-block, .section h2');
   if (!('IntersectionObserver' in window)) {
     animatedElements.forEach(el => {
       el.style.opacity = '1';
@@ -196,14 +208,24 @@ function initObserver() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
         setTimeout(() => {
           entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
+          entry.target.classList.add('animate');
+          
+          // Trigger counter animation for stats
+          if (entry.target.classList.contains('stat')) {
+            animateStatCounter(entry.target);
+          }
         }, 100);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
 
   animatedElements.forEach(el => observer.observe(el));
 }
@@ -215,8 +237,14 @@ function initObserver() {
 function initCardHoverEffects() {
   const cards = document.querySelectorAll('.card');
   cards.forEach(card => {
-    card.addEventListener('mouseenter', () => card.style.zIndex = '10');
-    card.addEventListener('mouseleave', () => card.style.zIndex = '');
+    card.addEventListener('mouseenter', () => {
+      card.style.zIndex = '10';
+      card.style.transform = 'translateY(-15px) scale(1.02)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.zIndex = '';
+      card.style.transform = 'translateY(0) scale(1)';
+    });
   });
 }
 
@@ -229,7 +257,7 @@ function initWorkflowAnimation() {
   let animationInterval;
   let isAnimating = false;
   const totalSteps = 6;
-  const stepDuration = 1200;
+  const stepDuration = 1500; // Slower, more HireMe-like timing
 
   const progressBar = document.getElementById('progressBar');
   const progressPercentage = document.getElementById('progressPercentage');
@@ -244,7 +272,7 @@ function initWorkflowAnimation() {
 
     if (currentStep >= totalSteps) {
       resetAnimation();
-      setTimeout(() => { startAnimation(); }, 800);
+      setTimeout(() => { startAnimation(); }, 2000); // Longer pause between cycles
       return;
     }
 
@@ -256,6 +284,8 @@ function initWorkflowAnimation() {
       steps[currentStep].classList.add('animate', 'active');
 
       const percent = ((currentStep + 1) / totalSteps) * 100;
+      // Smooth progress bar animation
+      progressBar.style.transition = 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
       progressBar.style.width = percent + '%';
       progressPercentage.textContent = Math.round(percent) + '%';
 
@@ -273,8 +303,8 @@ function initWorkflowAnimation() {
           steps[totalSteps - 1].classList.remove('active');
           steps[totalSteps - 1].classList.add('completed');
           isAnimating = false;
-          animateCounters();
-          setTimeout(() => { resetAnimation(); startAnimation(); }, 1500);
+          animateValueCounters();
+          setTimeout(() => { resetAnimation(); startAnimation(); }, 3000);
         }, stepDuration);
       }
     } else {
@@ -292,10 +322,11 @@ function initWorkflowAnimation() {
     arrows.forEach(arrow => arrow.classList.remove('animate', 'active'));
   }
 
-  function animateCounters() {
-    animateCounter('stat1', 45, 1500);
+  function animateValueCounters() {
+    animateCounter('stat1', 90, 2000);
     animateCounter('stat2', 100, 1500);
     animateCounter('stat3', 24, 1500);
+    animateCounter('stat4', 0, 1000);
   }
 
   function animateCounter(elementId, finalValue, duration) {
@@ -303,7 +334,7 @@ function initWorkflowAnimation() {
     if (!element) return;
 
     const startValue = 0;
-    const increment = finalValue / (duration / 16);
+    const increment = finalValue / (duration / 20); // Smoother animation
     let currentValue = startValue;
 
     const timer = setInterval(() => {
@@ -314,10 +345,23 @@ function initWorkflowAnimation() {
       } else {
         element.textContent = Math.floor(currentValue);
       }
-    }, 16);
+    }, 20);
   }
 
-  startAnimation();
+  // Start animation when workflow section is visible
+  const workflowSection = document.getElementById('workflow-visualization');
+  if (workflowSection) {
+    const workflowObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => startAnimation(), 500);
+          workflowObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    workflowObserver.observe(workflowSection);
+  }
 }
 
 
@@ -339,28 +383,31 @@ function initUseCaseDemos() {
 
 
 // ======================
-// Scroll Animations
+// HireMe-style Scroll Animations
 // ======================
-function initScrollAnimations() {
+function initHireMeScrollAnimations() {
   const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
   };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.animationDelay = '0s';
+        const delay = entry.target.dataset.delay || 0;
+        entry.target.style.animationDelay = `${delay}s`;
         entry.target.style.animationFillMode = 'both';
         
-        if (entry.target.classList.contains('fade-in-up')) {
-          entry.target.style.animation = 'fadeInUp 0.8s ease-out';
-        } else if (entry.target.classList.contains('fade-in-left')) {
-          entry.target.style.animation = 'fadeInLeft 0.8s ease-out';
-        } else if (entry.target.classList.contains('fade-in-right')) {
-          entry.target.style.animation = 'fadeInRight 0.8s ease-out';
+        if (entry.target.classList.contains('slide-up')) {
+          entry.target.style.animation = 'slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        } else if (entry.target.classList.contains('slide-left')) {
+          entry.target.style.animation = 'slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        } else if (entry.target.classList.contains('slide-right')) {
+          entry.target.style.animation = 'slideInRight 1s cubic-bezier(0.4, 0, 0.2, 1)';
         } else if (entry.target.classList.contains('scale-in')) {
-          entry.target.style.animation = 'scaleIn 0.8s ease-out';
+          entry.target.style.animation = 'scaleIn 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        } else if (entry.target.classList.contains('fade-in')) {
+          entry.target.style.animation = 'fadeIn 1s ease-out';
         }
         
         observer.unobserve(entry.target);
@@ -370,38 +417,46 @@ function initScrollAnimations() {
 
   // Add animation classes to elements
   document.querySelectorAll('.card').forEach((el, index) => {
-    el.classList.add('fade-in-up');
-    el.style.animationDelay = `${index * 0.1}s`;
+    el.classList.add('slide-up');
+    el.dataset.delay = index * 0.15;
     observer.observe(el);
   });
 
   document.querySelectorAll('.step').forEach((el, index) => {
     el.classList.add('scale-in');
-    el.style.animationDelay = `${index * 0.2}s`;
+    el.dataset.delay = index * 0.2;
     observer.observe(el);
   });
 
   document.querySelectorAll('.stat').forEach((el, index) => {
-    el.classList.add('fade-in-up');
-    el.style.animationDelay = `${index * 0.15}s`;
+    el.classList.add('slide-up');
+    el.dataset.delay = index * 0.1;
+    observer.observe(el);
+  });
+  
+  document.querySelectorAll('.badge').forEach((el, index) => {
+    el.classList.add('scale-in');
+    el.dataset.delay = index * 0.1;
     observer.observe(el);
   });
 }
 
 // ======================
-// Parallax Effects
+// HireMe-style Parallax Effects
 // ======================
 function initParallaxEffects() {
-  const parallaxElements = document.querySelectorAll('.hero-image-container');
+  const parallaxElements = document.querySelectorAll('.hero-image-container, .hero-wrapper::before');
   
   if (!parallaxElements.length) return;
 
   function updateParallax() {
     const scrolled = window.pageYOffset;
-    const rate = scrolled * -0.5;
+    const rate = scrolled * -0.3; // Gentler parallax effect
 
     parallaxElements.forEach(element => {
-      element.style.transform = `translateY(${rate}px)`;
+      if (element.classList.contains('hero-image-container')) {
+        element.style.transform = `translateY(${rate}px)`;
+      }
     });
   }
 
@@ -411,11 +466,57 @@ function initParallaxEffects() {
     if (!ticking) {
       requestAnimationFrame(updateParallax);
       ticking = true;
-      setTimeout(() => { ticking = false; }, 16);
+      setTimeout(() => { ticking = false; }, 20);
     }
   }
 
   window.addEventListener('scroll', requestTick);
+}
+
+// ======================
+// Staggered Animations (HireMe-style)
+// ======================
+function initStaggeredAnimations() {
+  const staggerGroups = document.querySelectorAll('.badges-row, .features, .steps, .cards-container');
+  
+  staggerGroups.forEach(group => {
+    const children = group.children;
+    Array.from(children).forEach((child, index) => {
+      child.style.animationDelay = `${index * 0.1}s`;
+      child.classList.add('animate-on-scroll');
+    });
+  });
+}
+
+// ======================
+// Counter Animations for Stats
+// ======================
+function initCounterAnimations() {
+  function animateStatCounter(statElement) {
+    const numberElement = statElement.querySelector('.stat-number');
+    if (!numberElement) return;
+    
+    const finalValue = parseInt(numberElement.textContent) || 0;
+    const duration = 2000;
+    const startValue = 0;
+    const increment = finalValue / (duration / 30);
+    let currentValue = startValue;
+    
+    numberElement.textContent = '0';
+    
+    const timer = setInterval(() => {
+      currentValue += increment;
+      if (currentValue >= finalValue) {
+        clearInterval(timer);
+        numberElement.textContent = finalValue;
+      } else {
+        numberElement.textContent = Math.floor(currentValue);
+      }
+    }, 30);
+  }
+  
+  // Export function for use in scroll observer
+  window.animateStatCounter = animateStatCounter;
 }
 
 // ======================
@@ -436,7 +537,9 @@ function debounce(func, wait, immediate) {
   };
 }
 
-// Video functionality
+// ======================
+// Enhanced Video functionality
+// ======================
 const video = document.getElementById('tutorial-video');
 const playButton = document.querySelector('.play-button');
 
@@ -458,4 +561,86 @@ if (video && playButton) {
   video.addEventListener('ended', () => {
     playButton.classList.remove('hidden');
   });
+  
+  // Add loading state
+  video.addEventListener('loadstart', () => {
+    playButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  });
+  
+  video.addEventListener('canplay', () => {
+    playButton.innerHTML = '&#9658;';
+  });
 }
+
+// ======================
+// Smooth scroll enhancements
+// ======================
+function enhancedSmoothScroll() {
+  // Add momentum scrolling for iOS
+  document.body.style.webkitOverflowScrolling = 'touch';
+  
+  // Enhanced easing for scroll animations
+  const easeInOutCubic = (t) => {
+    return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  };
+  
+  // Custom smooth scroll implementation
+  window.smoothScrollTo = (target, duration = 1000) => {
+    const targetElement = typeof target === 'string' ? document.querySelector(target) : target;
+    if (!targetElement) return;
+    
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+    
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = easeInOutCubic(timeElapsed / duration) * distance;
+      window.scrollTo(0, startPosition + run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+    
+    requestAnimationFrame(animation);
+  };
+}
+
+// Initialize enhanced smooth scroll
+enhancedSmoothScroll();
+
+// ======================
+// Performance optimizations
+// ======================
+function initPerformanceOptimizations() {
+  // Lazy load images
+  const images = document.querySelectorAll('img[data-src]');
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.remove('lazy');
+        imageObserver.unobserve(img);
+      }
+    });
+  });
+  
+  images.forEach(img => imageObserver.observe(img));
+  
+  // Preload critical resources
+  const preloadLinks = [
+    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'
+  ];
+  
+  preloadLinks.forEach(href => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'style';
+    link.href = href;
+    document.head.appendChild(link);
+  });
+}
+
+// Initialize performance optimizations
+initPerformanceOptimizations();
