@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
   initNavigation();
   initSmoothScrolling();
   initAnimations();    
-  initBanner();
   initButtons();
   initVideoPlaceholder();
   initMobileMenu();
@@ -16,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
   initCardHoverEffects();
   initWorkflowAnimation();
   initUseCaseDemos();
+  initScrollAnimations();
+  initParallaxEffects();
 });
 
 
@@ -100,22 +101,6 @@ function initAnimations() {
     element.style.opacity = '0';
     element.style.transform = 'translateY(20px)';
     element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  });
-}
-
-
-// ======================
-// Banner
-// ======================
-function initBanner() {
-  const banner = document.querySelector('.banner');
-  const closeButton = document.querySelector('.banner-close');
-  if (!banner || !closeButton) return;
-
-  closeButton.addEventListener('click', function() {
-    banner.style.transform = 'translateY(-100%)';
-    banner.style.transition = 'transform 0.5s ease';
-    setTimeout(() => banner.remove(), 500);
   });
 }
 
@@ -354,6 +339,86 @@ function initUseCaseDemos() {
 
 
 // ======================
+// Scroll Animations
+// ======================
+function initScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationDelay = '0s';
+        entry.target.style.animationFillMode = 'both';
+        
+        if (entry.target.classList.contains('fade-in-up')) {
+          entry.target.style.animation = 'fadeInUp 0.8s ease-out';
+        } else if (entry.target.classList.contains('fade-in-left')) {
+          entry.target.style.animation = 'fadeInLeft 0.8s ease-out';
+        } else if (entry.target.classList.contains('fade-in-right')) {
+          entry.target.style.animation = 'fadeInRight 0.8s ease-out';
+        } else if (entry.target.classList.contains('scale-in')) {
+          entry.target.style.animation = 'scaleIn 0.8s ease-out';
+        }
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Add animation classes to elements
+  document.querySelectorAll('.card').forEach((el, index) => {
+    el.classList.add('fade-in-up');
+    el.style.animationDelay = `${index * 0.1}s`;
+    observer.observe(el);
+  });
+
+  document.querySelectorAll('.step').forEach((el, index) => {
+    el.classList.add('scale-in');
+    el.style.animationDelay = `${index * 0.2}s`;
+    observer.observe(el);
+  });
+
+  document.querySelectorAll('.stat').forEach((el, index) => {
+    el.classList.add('fade-in-up');
+    el.style.animationDelay = `${index * 0.15}s`;
+    observer.observe(el);
+  });
+}
+
+// ======================
+// Parallax Effects
+// ======================
+function initParallaxEffects() {
+  const parallaxElements = document.querySelectorAll('.hero-image-container');
+  
+  if (!parallaxElements.length) return;
+
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const rate = scrolled * -0.5;
+
+    parallaxElements.forEach(element => {
+      element.style.transform = `translateY(${rate}px)`;
+    });
+  }
+
+  // Throttle scroll events for better performance
+  let ticking = false;
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+      setTimeout(() => { ticking = false; }, 16);
+    }
+  }
+
+  window.addEventListener('scroll', requestTick);
+}
+
+// ======================
 // Utility
 // ======================
 function debounce(func, wait, immediate) {
@@ -370,23 +435,27 @@ function debounce(func, wait, immediate) {
     if (callNow) func.apply(context, args);
   };
 }
+
+// Video functionality
 const video = document.getElementById('tutorial-video');
 const playButton = document.querySelector('.play-button');
 
-playButton.addEventListener('click', () => {
-  if(video.paused) {
-    video.play();
-    playButton.classList.add('hidden');
-  } else {
-    video.pause();
+if (video && playButton) {
+  playButton.addEventListener('click', () => {
+    if(video.paused) {
+      video.play();
+      playButton.classList.add('hidden');
+    } else {
+      video.pause();
+      playButton.classList.remove('hidden');
+    }
+  });
+
+  video.addEventListener('pause', () => {
     playButton.classList.remove('hidden');
-  }
-});
+  });
 
-video.addEventListener('pause', () => {
-  playButton.classList.remove('hidden');
-});
-
-video.addEventListener('ended', () => {
-  playButton.classList.remove('hidden');
-});
+  video.addEventListener('ended', () => {
+    playButton.classList.remove('hidden');
+  });
+}
