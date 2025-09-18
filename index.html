@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scootoid Analysis Application</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+ <!-- Top Banner -->
+<div class="banner">
+  <div class="banner-content">
+  </div>
+</div>
+
+
+
+ <!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <!-- Updated Logo -->
+      <img class="logo" src="logo.png" alt="Scootoid.AI Logo">
+
+
+      <!-- Site name with .AI highlighted -->
+      Scootoid<span class="accent">.AI</span>
+    </div>
+    <nav class="nav">
+      <a href="#why">Why</a>
+      <a href="#how">How It Works</a>
+      <a href="#use-cases">Use Cases</a>
+      <a href="#tutorial">Tutorial</a>
+      <a href="#cta" class="access-link">Get Started</a>
+    </nav>
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+
+ <!-- Hero Wrapper with full-width background -->
+<div class="hero-wrapper">
+  <!-- Existing Hero Section -->
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Automated FEA. Code-Compliant Reports. <span class="highlight">90% Faster.</span></h1>
+      <p>Upload your PV Elite input PDF — get a validated, code-compliant FEA report in hours, not weeks.</p>
+      <a href="https://scootoid-ai.web.app/login" target="_blank" class="btn big">
+        <i class="fas fa-upload"></i> Upload PV Elite PDF
+      </a>
+      
+      <div class="badges-row">
+        <span class="badge"><i class="fas fa-ban"></i> No Subscription</span>
+        <span class="badge"><i class="fas fa-desktop"></i> No Software</span>
+        <span class="badge"><i class="fas fa-server"></i> No Infra Purchase</span>
+        <span class="badge"><i class="fas fa-credit-card"></i> Pay-Per-Report</span>
+      </div>
+      
+      <ul class="features">
+        <li><i class="fas fa-check-circle"></i> ASME compliance logic embedded.</li>
+        <li><i class="fas fa-check-circle"></i> Enterprise-grade security for your data</li>
+      </ul>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image-container">
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80" alt="AI Engineering Analysis" class="hero-image" />
+        <div class="hero-image-overlay">
+          <div class="overlay-content">
+            <i class="fas fa-play-circle"></i>
+            <p>See how it works</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+  <!-- Why Section -->
+ <section id="why" class="section">
+  <div class="section-inner">
+    <h2>Why is it Difficult to Automate?</h2>
+    <h3>FE analysis in pressure vessel equipment design</h3>
+
+    <p>
+      In pressure vessel design, <strong><em>codes are constantly evolving</em></strong>, so the rules never stay the same.
+      At the same time, <strong><em>each vessel is unique</em></strong>, with geometries that leave no room for ready-made templates.
+    </p>
+
+    <p>
+      FEA itself is needed only for <strong><em>exceptional cases where formulas don't apply</em></strong>, making it difficult to standardize.
+      Even then, <u><strong>stress rules demand engineering judgment</strong></u> — software alone cannot decide what is primary, secondary, or peak stress.
+    </p>
+
+    <p>
+      On top of this, vessels are subjected to <strong><em>complex load interactions</em></strong> — pressure, thermal, seismic, fatigue — all behaving in nonlinear ways.
+      And with the <strong><em>high safety liability in case of failure</em></strong>, every analysis must ensure strict code compliance and certified review.
+    </p>
+
+    <p>
+      Finally, <strong><em>data is scattered across multiple sources</em></strong> — geometry, materials, loads — and pulling it all into a single consistent analysis document is slow and error-prone.
+    </p>
+  </div>
+</section>
+
+
+  <!-- Combined Section: What Scootoid.AI Does & Why Choose -->
+  <section id="what-why" class="section">
+    <div class="section-inner">
+      <h2>What Scootoid.AI Does & Why Choose Us</h2>
+      <p class="section-description">
+        Scootoid.AI delivers compliant FEA  with up to 90% time savings.
+      </p>
+      <div class="stats-container">
+        <div class="stat">
+          <div class="stat-number">90%</div>
+          <div class="stat-label">Time Reduction</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Code Compliance</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Analysis Availability</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- NEW SECTION: Workflow Visualization -->
+<section id="workflow-visualization" class="section">
+  <div id="workflow-section">
+    <div class="workflow-header">
+      <h2>How It Works</h2>
+      <p class="workflow-subtitle">Transform your PV Elite PDF into a compliant FEA report in hours, not weeks</p>
+    </div>
+
+    <div class="workflow-container">
+      <div class="progress-section">
+        <div class="progress-title">Analysis Progress</div>
+        <div class="progress-subtitle">Automated workflow processing</div>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-percentage" id="progressPercentage">0%</div>
+      </div>
+
+      <div class="flow-container">
+        <!-- Step 1: Upload -->
+        <div class="workflow-step" data-step="1">
+          <div class="step-time">< 1 min</div>
+          <div class="step-icon-container">
+            <div class="step-icon-circle"></div>
+            <div class="step-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+          </div>
+          <div class="step-text">
+            <div class="step-title">Upload PDF</div>
+            <div class="step-description">Submit Design Calculations</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+
+        <!-- Step 2: Validation -->
+        <div class="workflow-step" data-step="2">
+          <div class="step-time">2-3 min</div>
+          <div class="step-icon-container">
+            <div class="step-icon-circle"></div>
+            <div class="step-icon">
+              <i class="fas fa-check-double"></i>
+            </div>
+          </div>
+          <div class="step-text">
+            <div class="step-title">AI Enables</div>
+            <div class="step-description">Design Parameter Processing</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+
+        <!-- Step 3: Analysis -->
+        <div class="workflow-step" data-step="3">
+          <div class="step-time">15-30 min</div>
+          <div class="step-icon-container">
+            <div class="step-icon-circle"></div>
+            <div class="step-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+          </div>
+          <div class="step-text">
+            <div class="step-title">FE analysis </div>
+            <div class="step-description">AI-powered process</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+
+        <!-- Step 4: Compliance -->
+        <div class="workflow-step" data-step="4">
+          <div class="step-time">5-10 min</div>
+          <div class="step-icon-container">
+            <div class="step-icon-circle"></div>
+            <div class="step-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+          </div>
+          <div class="step-text">
+            <div class="step-title">Post Processing</div>
+            <div class="step-description">AS per code requirements</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+
+        <!-- Step 5: Generation -->
+        <div class="workflow-step" data-step="5">
+          <div class="step-time">3-5 min</div>
+          <div class="step-icon-container">
+            <div class="step-icon-circle"></div>
+            <div class="step-icon">
+              <i class="fas fa-file-contract"></i>
+            </div>
+          </div>
+          <div class="step-text">
+            <div class="step-title">Report Gen</div>
+            <div class="step-description">Automated FE Report</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+
+        <!-- Step 6: Download -->
+        <div class="workflow-step" data-step="6">
+          <div class="step-time">< 1 min</div>
+          <div class="step-icon-container">
+            <div class="step-icon-circle"></div>
+            <div class="step-icon">
+              <i class="fas fa-download"></i>
+            </div>
+          </div>
+          <div class="step-text">
+            <div class="step-title">Download</div>
+            <div class="step-description">Code Compliant FE Report</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Value Proposition Section -->
+    <div class="value-proposition">
+      <div class="value-title">
+        From Weeks to Hours
+        <span class="value-highlight">90% Faster</span>
+        Code-Compliant Engineering Reports
+      </div>
+      
+      <div class="value-stats">
+        
+        <div class="stat-item">
+          <div class="stat-number-container">
+            <span class="stat-number" id="stat2">0</span>
+            <span class="stat-suffix">%</span>
+          </div>
+          <div class="stat-label">ASME Compliant</div>
+          <div class="stat-description">Built-in validation engine</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number-container">
+            <span class="stat-number" id="stat3">0</span>
+            <span class="stat-suffix">/7</span>
+          </div>
+          <div class="stat-label">Available</div>
+          <div class="stat-description">Zero Human Intervention </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number-container">
+            <span class="stat-prefix" id="currency-symbol">$</span>
+            <span class="stat-number" id="stat4">0</span>
+          </div>
+          <div class="stat-label">Setup Cost</div>
+          <div class="stat-description">Pay per report only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <!-- Use Cases -->
+<section id="use-cases" class="section">
+  <div class="section-inner">
+    <h2>Use Cases</h2>
+    <div class="cards-container">
+      <div class="card featured">
+        <img src="https://via.placeholder.com/600x200.png?text=New+Image+Coming+Soon" 
+             alt="Bellow Analysis" class="card-image" />
+
+        <div class="card-content">
+          <h3>Single Convolute Bellow Analysis</h3>
+
+          <div class="use-case-step">
+            <div class="step-title">Step 1</div>
+            <div class="step-description">
+              Spring rate calculations as per TEMA
+            </div>
+          </div>
+
+          <div class="use-case-step">
+            <div class="step-title">Step 2</div>
+            <div class="step-description">
+              Detailed FE analysis, code validation, and report
+            </div>
+            <div class="step-subtext">
+              Supports corroded or uncorroded geometries, including upset conditions
+            </div>
+          </div>
+
+          <div class="card-button">
+            <a href="https://scootoid-ai.web.app/login" target="_blank" class="btn">
+              Start Bellow Analysis
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <!-- Different -->
+<section id="comparison" class="section">
+  <div class="section-inner">
+    <h2 class="section-title">The Scootoid.AI Edge</h2>
+
+    <div class="comparison-row">
+      <!-- Traditional Workflow -->
+      <div class="comparison-block traditional">
+        <h3>Traditional FEA Workflow</h3>
+        <ul>
+          <li>Delays due to weeks of coordination</li>
+          <li><strong>Repetitive Manual geometry </strong>and load setup </li>
+          <li>Reports vary with <strong>inconsistent formatting</strong></li>
+          <li><strong>Manual ASME rule application</strong></li>
+          <li><strong>Admin overhead</strong> for licenses, infrastructure, and IT</li>
+          <li><strong>High upfront licensing</strong> and engineer costs</li>
+        </ul>
+      </div>
+
+      <!-- Scootoid.AI Workflow -->
+      <div class="comparison-block scootoid">
+        <h3>Scootoid.AI</h3>
+        <ul>
+          <li><span class="highlight">Up to 90% time savings</span> for faster results</li>
+          <li><span class="highlight">Built-in ASME compliance</span></li>
+          <li><span class="highlight">Standardized PDF reports</span> that are audit-ready</li>
+          <li><span class="highlight">End-to-end automation</span> with no manual setup</li>
+          <li><span class="highlight">Zero admin work</span> with nothing to install</li>
+          <li><span class="highlight">Pay-per-report</span> with predictable pricing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  <!-- Audiences -->
+  <section id="audiences" class="section">
+    <div class="section-inner">
+      <h2>Who Benefits</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon">
+            <i class="fas fa-industry"></i>
+          </div>
+          <h3>OEMs</h3>
+          <p>Accelerate bidding and design cycle with rapid, compliant analysis</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <i class="fas fa-hard-hat"></i>
+          </div>
+          <h3>EPCs</h3>
+          <p>Quick check at concept level faster with automated engineering validation</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <h3>Consultants</h3>
+          <p>Scale your practice without adding overhead or software costs</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security -->
+  <section id="security" class="section">
+    <div class="section-inner">
+      <h2>Enterprise Security</h2>
+      <div class="cards-container">
+        <div class="card">
+          <div class="card-content">
+            <h3>Security & Compliance</h3>
+            <ul class="features">
+              <li><i class="fas fa-shield-alt"></i> Enterprise-grade security protocols</li>
+              <li><i class="fas fa-database"></i> Complete data isolation and encryption</li>
+              <li><i class="fas fa-user-lock"></i> Role-based access controls</li>
+              <li><i class="fas fa-history"></i> Comprehensive audit trails</li>
+              <li><i class="fas fa-file-alt"></i> Compliance-ready logging and reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision -->
+  <!--<section id="vision" class="section">
+    <div class="section-inner">
+      <h2>Our Vision</h2>
+      <p class="section-description">
+        We are starting from bellow in order to do comprehensive pressure vessel and piping analysis while keeping code compliance central to entire analysis. Our platform will continue to deliver automated, validated engineering reports that save time and reduce errors across the oil and gas industry.
+      </p>
+    </div>
+  </section> -->
+
+  <!-- Tutorial -->
+  <section id="tutorial" class="section">
+  <div class="section-inner">
+    <h2>Tutorial</h2>
+    <div class="video-wrap">
+      <video id="tutorial-video" width="640" height="360" controls>
+        <source src="video/WhatsApp Video 2025-09-12 at 15.16.29_342ba568.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button class="play-button" aria-label="Play Video">&#9658;</button> <!-- play symbol only -->
+    </div>
+    <p class="video-description">
+      Watch our tutorial to learn how to use Scootoid.AI for your engineering analysis needs.
+    </p>
+  </div>
+</section>
+
+
+
+
+<!-- CTA Section -->
+<section id="cta">
+  <div class="section-inner">
+    <h2>Start your Journey from Weeks to Hours</h2>
+    
+    <!-- Highlighted text with better styling -->
+    <div class="highlighted-box">
+      For FE report
+    </div>
+
+    <div class="app-buttons">
+      <a href="https://scootoid-ai.web.app/login" target="_blank" class="btn big">
+        Log on to Scootoid.AI →
+      </a>
+    </div>  
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-column">
+      <h4>Contact</h4>
+      <p>
+        Email: <a href="mailto:ai@scootoid.com" class="email-link">ai@scootoid.com</a>
+      </p>
+    </div>
+    <div class="copyright">
+      &copy; <span id="year"></span> Scootoid.AI - All Rights Reserved
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
+
