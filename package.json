@@ -1,0 +1,17 @@
+{
+  "name": "scootoid-analysis-application",
+  "version": "1.0.0",
+  "description": "Scootoid Analysis Application static website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "http-server . -p 3000 -o",
+    "start": "http-server . -p 3000",
+    "build": "echo 'Static site - no build step required'"
+  },
+  "keywords": ["scootoid", "analysis", "engineering", "fea"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
