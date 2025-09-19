@@ -373,7 +373,7 @@ margin: 0 auto;
 .brand {
 font-size: 32px;
 font-weight: 900;
-color: var(--primary);
+color: var(--secondary);
 display: flex;
 align-items: center;
 text-decoration: none;
@@ -393,7 +393,7 @@ filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 .brand .accent {
-background: var(--gradient-secondary);
+background: var(--primary);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
